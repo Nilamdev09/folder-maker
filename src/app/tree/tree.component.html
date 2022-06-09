@@ -1,0 +1,28 @@
+<div class="node">
+
+  <div *ngIf="currentNode?.type === 'unset'" class="nodeType">
+    <button  (click)="currentNode.type = 'file'"> File</button>
+    <button  (click)="currentNode.type = 'folder'"> Folder</button>
+  </div>
+
+  <div *ngIf="currentNode?.type !== 'unset' && currentNode?.name" class="displayNode">
+    <img
+      [src]="currentNode?.type === 'file' ? 'assets/imgs/file-regular.svg' : 'assets/imgs/folder-open-regular.svg'">
+    <span>{{currentNode?.name}}</span>
+    <button (click)="add()" *ngIf="currentNode.type === 'folder'"> Add</button>
+    <button (click)="remove()"> Remove</button>
+  </div>
+
+  <div *ngIf="currentNode?.type !== 'unset' && !currentNode?.name" class="addNewNode">
+    <img
+      [src]="currentNode?.type === 'file' ? 'assets/imgs/file-regular.svg' : 'assets/imgs/folder-open-regular.svg'">
+    <input [class.required]="name.invalid && name.touched" [formControl]="name">
+    <button (click)="save()"> Save</button>
+    <button (click)="remove()"> Cancel</button>
+  </div>
+</div>
+
+<div *ngIf="currentNode?.children?.length" class="childNode">
+  <app-tree *ngFor="let child of currentNode?.children" [currentNode]="child" (removeTreeNodeFromParent)="removeChild($event)">
+  </app-tree>
+</div>

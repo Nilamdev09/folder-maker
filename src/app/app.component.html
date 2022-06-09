@@ -1,0 +1,4 @@
+<button (click)="addTreeNode()" class="addRootFolder">Add root folder</button>
+<app-tree *ngFor="let node of nodesData" [currentNode]="node" (removeTreeNodeFromParent)="removeTreeNode($event)">
+</app-tree>
+<pre *ngIf="nodesData.length > 0">{{nodesData | json}}</pre>
